@@ -1,29 +1,21 @@
 //*******************************************************************************************/
-//******************************** Declaro array de Vacaciones  *****************************/
-//*******************************************************************************************/
-// Cantidad de dias por antigüedad	  Cant dias
-// 6 meses a 5 años	                    14
-// 5 años a 10 años	                    21
-// 10 años a 20 años	                  28
-// mayor a 20 años	                    35
-const arrayVacaciones = [14, 21, 28, 35];
-
-//*******************************************************************************************/
 //******************************** Declaro las Clases ************************************/
 //*******************************************************************************************/
+class Vacaciones{
+  constructor(desde,hasta,dias)
+  {
+    this.desde=desde;
+    this.hasta=hasta;
+    this.dias=dias;
+  }
+}
 
 class Empleado {
   aniosAntiguedad = 0;
   mesesAntiguedad = 0;
   diasAntiguedad = 0;
 
-  constructor(
-    nombre,
-    sueldoBruto,
-    fechaIngresoLaboral,
-    fechaDesvinculacion,
-    preAviso
-  ) {
+  constructor(nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion,preAviso) {
     this.nombre = nombre;
     this.sueldoBruto = sueldoBruto;
     this.fechaIngresoLaboral = fechaIngresoLaboral;
@@ -96,11 +88,11 @@ class Empleado {
       },
       {
         descripcion: 'Fecha Ingreso Laboral',
-        valor: persona.obtenerFechaIngresoLaboral()
+        valor: persona.obtenerFechaIngresoLaboral().toLocaleDateString()
       },
       {
         descripcion: 'Fecha Desvinculación',
-        valor: persona.obtenerFechaDesvinculacion()
+        valor: persona.obtenerFechaDesvinculacion().toLocaleDateString()
       },
       {
         descripcion: 'PreAviso',
@@ -253,17 +245,12 @@ class Liquidacion {
       24;
     if (this.aniosAntiguedad == 0 && this.mesesAntiguedad < 6) {
       vacacionesNoGozadas = 0;
-    } else {
-      if (this.aniosAntiguedad <= 5) cantDiasVacaciones = arrayVacaciones[0];
-      else if (this.aniosAntiguedad <= 10)
-        cantDiasVacaciones = arrayVacaciones[1];
-      else if (this.aniosAntiguedad <= 20)
-        cantDiasVacaciones = arrayVacaciones[2];
-      else cantDiasVacaciones = arrayVacaciones[3];
-
+    } 
+    else {
+      cantDiasVacaciones = arrayVacaciones.filter(vacaciones=>this.aniosAntiguedad>=vacaciones.desde  && this.aniosAntiguedad<=vacaciones.hasta);
       this.vacacionesNoGozadas =
         sueldoCalculado *
-        ((cantDiasVacaciones / 365) * (cantDiasTrabajadosAnioDespido + 1));
+        ((cantDiasVacaciones[0].dias / 365) * (cantDiasTrabajadosAnioDespido + 1));
     }
   }
   calcularSacVacacionesNoGozadas() {
@@ -318,9 +305,25 @@ class Liquidacion {
     console.log(
       "SAC Vacaciones no Gozadas: %c$" + this.obtenerSacVacacionesNoGozadas(),"font-size:14px; color:black; font-weight:bold"
     );
-    console.log("%cTOTAL DE LA LIQUIDACION: $" + this.obtenerTotalLiquidacion(),"font-size:18px; color:black; font-weight:bold");
+    console.log("%cTOTAL DE LA LIQUIDACION: $" + this.obtenerTotalLiquidacion(),"font-size:18px; color:black; font-weight:bold;background-color:#B5FED9");
   }
 }
+
+//*******************************************************************************************/
+//******************************** Declaro array de Vacaciones  *****************************/
+//*******************************************************************************************/
+// Cantidad de dias por antigüedad	  Cant dias
+// 6 meses a 5 años	                    14
+// 6 años a 10 años	                    21
+// 11 años a 20 años	                  28
+// mayor a 20 años	                    35
+
+const arrayVacaciones = [];
+//pongo 0 en el objeto 0 del array, porque quiero representar años, luego lo valido en la funcion del calculo de vacaciones y no le permito si tiene menos de 6 meses de trabajo
+arrayVacaciones.push(new Vacaciones(0,5,14)) 
+arrayVacaciones.push(new Vacaciones(6,10,21))
+arrayVacaciones.push(new Vacaciones(11,20,28))
+arrayVacaciones.push(new Vacaciones(21,999,35))
 
 //*******************************************************************************************/
 //******************************** Declaro las Funciones ************************************/
@@ -386,17 +389,17 @@ function diasDelMes(fecha) {
 //********************** Luego se realizado el calculo de la liquidacion ********************/
 //*******************************************************************************************/
 
-let nombre = prompt("Ingrese su Nombre y Apellido")
- let sueldoBruto = IngresarSueldoBruto()
-let fechaIngresoLaboral = IngresarFecha("Ingreso Laboral")
-let fechaDesvinculacion = IngresarFecha("Desvinculación")
-let preAviso = IngresoPreAviso()
+// let nombre = prompt("Ingrese su Nombre y Apellido")
+// let sueldoBruto = IngresarSueldoBruto()
+// let fechaIngresoLaboral = IngresarFecha("Ingreso Laboral")
+// let fechaDesvinculacion = IngresarFecha("Desvinculación")
+// let preAviso = IngresoPreAviso()
 
 //Declaro las clases para el proceso
-let persona = new Empleado(nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion, preAviso)
+//let persona = new Empleado(nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion, preAviso)
 
 //Dejo esta linea para probar sin tener que ingresar todos los datos
-//let persona = new Empleado("Pedro",500000,new Date(2020, 07, 18).toLocaleDateString("en-EN"),new Date(2023, 06, 15).toLocaleDateString("en-EN"),"N");
+let persona = new Empleado("Pedro",500000,new Date(2016, 07, 18).toLocaleDateString("en-EN"),new Date(2023, 06, 15).toLocaleDateString("en-EN"),"N");
 
 persona.obtenerAnioMesesDiasAntiguedad();
 persona.imprimirInformacion();
