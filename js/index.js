@@ -389,21 +389,21 @@ function diasDelMes(fecha) {
 //********************** Luego se realizado el calculo de la liquidacion ********************/
 //*******************************************************************************************/
 
-// let nombre = prompt("Ingrese su Nombre y Apellido")
-// let sueldoBruto = IngresarSueldoBruto()
-// let fechaIngresoLaboral = IngresarFecha("Ingreso Laboral")
-// let fechaDesvinculacion = IngresarFecha("Desvinculación")
-// let preAviso = IngresoPreAviso()
-
-//Declaro las clases para el proceso
-//let persona = new Empleado(nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion, preAviso)
-
 //Dejo esta linea para probar sin tener que ingresar todos los datos
-let persona = new Empleado("Pedro",500000,new Date(2016, 07, 18).toLocaleDateString("en-EN"),new Date(2023, 06, 15).toLocaleDateString("en-EN"),"N");
+// let persona = new Empleado("Pedro",500000,new Date(2016, 07, 18).toLocaleDateString("en-EN"),new Date(2023, 06, 15).toLocaleDateString("en-EN"),"N");
 
+let nombre = prompt("Ingrese su Nombre y Apellido")
+let sueldoBruto = IngresarSueldoBruto()
+let fechaIngresoLaboral = IngresarFecha("Ingreso Laboral")
+let fechaDesvinculacion = IngresarFecha("Desvinculación")
+let preAviso = IngresoPreAviso()
+
+//Declaro la clase persona para el proceso
+let persona = new Empleado(nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion, preAviso)
 persona.obtenerAnioMesesDiasAntiguedad();
 persona.imprimirInformacion();
 
+//Declaro la clase Liquidacion para el calculo
 let liquidacion = new Liquidacion(persona);
 liquidacion.calcularLiquidacion();
 liquidacion.imprimirLiquidacion();
