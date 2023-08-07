@@ -216,10 +216,18 @@ function calcularLiquidaciones() {
         confirmButtonText: 'Cerrar'
         })
       }) 
-
     }
 
     localStorage.setItem("arrayLiquidaciones",JSON.stringify(arrayLiq))
+
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Se finalizo el calculo correctamente',
+      showConfirmButton: false,
+      timer: 2000
+    })
+
   } else {
     alert("No existen empleados para calcular liquidaciones!")
   }
