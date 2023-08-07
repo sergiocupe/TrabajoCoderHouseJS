@@ -1,33 +1,110 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-body{
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
+body {
+  font-family: Roboto, Inter var, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
 }
-h1, h2{
-    font-size: 3rem;
-    font-weight: 600;
-    color: #080000;
-    padding: 1rem;
-    text-align: center;
+
+.tp-titulo-header {
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  padding: 1rem;
 }
-h2{
-    color: brown;
-    font-weight: 900;
-    letter-spacing: 3px;
-    padding-bottom: 0;
+
+.tp-titulo {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #18761b;
+  padding: 1rem;
 }
-.logo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
+
+.tp-formulario {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
 }
-.logo img{
-    width: 30rem;
-    height: 30rem;;    
+
+.tp-seccionForm {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 20px;
+}
+
+.tp-formEmpleado {
+  width: 80%;
+  border: #e0e3e4 solid 1px;
+  border-radius: 5%;
+  padding: 20px;
+}
+
+.tp-empleados {
+  display: flex;
+  flex-direction: column;
+}
+
+.tp-cardsEmpleados
+{
+  padding-bottom: 10px;
+}
+
+.tp-empleadoCard {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+  width: 95%;
+  padding: 10px;
+}
+
+.tp-imgEmpleado {
+  width: 50px;
+}
+
+.tp-datosEmpleado
+{
+    font-size: 0.8em;
+    margin: 0;
+}
+
+.tp-liquidacionTotal
+{
+  font-weight: bold;
+}
+
+.tp-botonDetalle {
+  font-size: 0.7em;
+  width: 70px;
+  height: 30px;
+}
+
+.tp-botonDetalleInvisible
+{
+  display:none;
+}
+
+.tp-botonCalcular
+{
+  width: 95%;
+}
+
+.tp-botonBorrar
+{
+  padding: 1px;
+  width: 20px;
+  height: 30px;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 10px;
 }
