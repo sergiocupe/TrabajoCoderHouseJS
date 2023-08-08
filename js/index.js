@@ -161,7 +161,7 @@ class Liquidacion {
       60 /
       24;
     this.sacProporcional =
-      (this.empleado.sueldoBruto / 2 / 180) * (cantDiasTrabajadosAnioDespido + 1);
+      (this.empleado.sueldoBruto / 4 / 360) * (cantDiasTrabajadosAnioDespido + 1);
   }
   calcularVacacionesNoGozadas() {
     let fechaDesvinculacion = new Date(this.empleado.fechaDesvinculacion)
@@ -225,7 +225,7 @@ class Liquidacion {
 
   
   imprimirLiquidacion() {
-    this.detalleLiquidacion = "Salario proporcional mes en curso (días trabajados): $" + this.salarioProporcional.toLocaleString("en-US")
+    this.detalleLiquidacion = "Antigüedad Art. 245: $" + this.salarioProporcional.toLocaleString("en-US")
     this.detalleLiquidacion += "<br/>Sustitutiva de Preaviso: $" + this.sustitutivaPreAviso.toLocaleString("en-US")
     this.detalleLiquidacion += "<br/>SAC del Preaviso: $" + this.sacPreAviso.toLocaleString("en-US")
     this.detalleLiquidacion += "<br/>Sueldo por días Trabajados del mes: $" + this.sueldoDiasTrabajadorDelMes.toLocaleString("en-US")
