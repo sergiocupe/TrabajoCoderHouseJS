@@ -1,261 +1,150 @@
-//*******************************************************************************************/
-//******************************** Declaro las Clases ************************************/
-//*******************************************************************************************/
-class Vacaciones {
-  constructor(desde, hasta, dias) {
-    this.desde = desde;
-    this.hasta = hasta;
-    this.dias = dias;
+const d = document
+const cuerpo = d.body
+
+const campos =[
+  {
+    tipo:"text",
+    id:"txtNombreApellido",
+    texto:"Ingrese Nombre y Apellido"
+  },
+  {
+    tipo:"number",
+    id:"txtSueldoBruto",
+    texto:"Ingrese su mejor Sueldo Bruto"
+  },
+  {
+    tipo:"date",
+    id:"txtFechaIngreso",
+    texto:"Ingrese la Fecha de Ingreso"
+  },
+  {
+    tipo:"date",
+    id:"txtFechaDespido",
+    texto:"Ingrese la Fecha de Despido"
+  },
+  {
+    tipo:"select",
+    id:"txtHuboPreAviso",
+    texto:"Hubo Preaviso?"
   }
-}
+]
 
-class Empleado {
-  constructor(id,nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion,preAviso) {
-    this.id=id;
-    this.nombre = nombre;
-    this.sueldoBruto = sueldoBruto;
-    this.fechaIngresoLaboral = new Date(fechaIngresoLaboral)
-    this.fechaDesvinculacion = new Date(fechaDesvinculacion)
-    this.preAviso = preAviso;
+//******************************* HEADER ************************************ */
+//Creacion en el DOM de header del index.html
+const header = d.createElement("header")
+header.class = "header";
+
+const menu = d.createElement("nav")
+menu.className = "navbar navbar-expand-lg navbar-light bg-dark"
+
+const contenedor = d.createElement("div")
+contenedor.className = "container-fluid tp-titulo-header"
+contenedor.innerText = "CÁLCULO DE INDEMNIZACIÓN POR DESPIDO SIN CAUSA"
+
+//******************************* MAIN ************************************ */
+//Creacion en el DOM de main del index.html
+const main = d.createElement("main")
+
+//--Section izquierdo - Formulario Alta Empleado
+const seccion = d.createElement("section")
+seccion.className = "tp-seccionForm"
+
+//--div contenedor
+const divIzquierdo = d.createElement("div")
+divIzquierdo.className = "col-xs-12 col-sm-12 col-md-5 col-lg-5"
+
+//--h1 del titulo izquierdo
+const tituloIzquierdo = d.createElement("h1")
+tituloIzquierdo.className = "tp-titulo"
+tituloIzquierdo.innerText = "Datos del Empleado"
+
+//--form formulario para la carga de un empleado
+const formulario = d.createElement("form")
+formulario.className = "tp-formEmpleado"
+
+const divInputs = d.createElement("div")
+
+campos.forEach((input) => {
+  if (input.tipo!="select")
+  {
+  divInputs.innerHTML += `<div class="form-floating">
+            <input class="form-control" type="${input.tipo}" id="${input.id}" />
+            <label for="floatingSelect">${input.texto}</label></div><br/>`
   }
-}
-
-class Liquidacion {
-  salarioProporcional = 0;
-  sustitutivaPreAviso = 0;
-  sacPreAviso = 0;
-  sueldoDiasTrabajadorDelMes = 0;
-  integracionMesDespido = 0;
-  sacIntegracionMesDespido = 0;
-  sacProporcional = 0;
-  vacacionesNoGozadas = 0;
-  sacVacacionesNoGozadas = 0;
-  totalLiquidacion = 0;
-  
-  aniosAntiguedad = 0;
-  mesesAntiguedad = 0;
-  diasAntiguedad = 0;
-  liquidacionFinal = 0;
-
-  detalleLiquidacion=""
-
-  constructor(empleado) {
-    this.empleado = empleado;
+  else
+  {
+    divInputs.innerHTML += `<div class="form-floating">
+    <select class="form-select form-control" id="${input.id}">
+    <option value="" selected disabled></option>
+    <option value="SI">SI</option>
+    <option value="NO">NO</option></select>
+    <label for="floatingSelect">${input.texto}</label></div><br/>`
   }
+})
 
-  
-  obtenerTotalLiquidacion() {
-    return this.totalLiquidacion.toLocaleString("en-US")
-  }
-  
-  obtenerAnioMesesDiasAntiguedad() {
-    let fechaDesvinculacion = new Date(this.empleado.fechaDesvinculacion)
-    let fechaIngresoLaboral = new Date(this.empleado.fechaIngresoLaboral)
-    // Calcular la diferencia en milisegundos
-    const diferenciaMs = fechaDesvinculacion - fechaIngresoLaboral;
+//--Creo el boton para el formulario
+const botonForm=d.createElement("button")
+botonForm.type="button"
+botonForm.className="btn btn-success"
+botonForm.addEventListener("click",agregarEmpleadoLista)
+botonForm.innerText="Agregar Empleado"
 
-    // Calcular la diferencia en días, meses y años
-    const milisegundosEnUnDia = 1000 * 60 * 60 * 24;
+//--Section derecho -- Listado de empeledos
 
-    //const diferenciaDias = Math.floor(diferenciaMs / milisegundosEnUnDia);
-    const diferenciaMeses =
-      fechaDesvinculacion.getMonth() -
-      fechaIngresoLaboral.getMonth() +
-      12 *
-        (fechaDesvinculacion.getFullYear() -
-        fechaIngresoLaboral.getFullYear());
-    const diferenciaAnios = Math.floor(diferenciaMeses / 12);
+//--div contenedor
+const divDerecho = d.createElement("div")
+divDerecho.className = "col-xs-12 col-sm-12 col-md-5 col-lg-5"
 
-    // Ajustar la diferencia de días para tener en cuenta los meses y años completos
-    const date1Ajustado = new Date(fechaIngresoLaboral);
-    date1Ajustado.setFullYear(
-      fechaIngresoLaboral.getFullYear() + diferenciaAnios
-    );
-    date1Ajustado.setMonth(
-      fechaIngresoLaboral.getMonth() + (diferenciaMeses % 12)
-    );
-    const diferenciaDiasAjustado = Math.floor(
-      (fechaDesvinculacion - date1Ajustado) / milisegundosEnUnDia
-    );
-    this.aniosAntiguedad = diferenciaAnios;
-    this.mesesAntiguedad = diferenciaMeses % 12;
-    this.diasAntiguedad = Math.abs(diferenciaDiasAjustado);
-  }
+//--h1 del titulo izquierdo
+const tituloDerecho = d.createElement("h1")
+tituloDerecho.className = "tp-titulo"
+tituloDerecho.innerText = "Listado de Empleados a liquidar:"
 
-  calcularSalarioProporcionalArt245() {
-    //Si la antiguedad es menor a 3 meses, el salario proporcional es 0
-    if (
-      this.aniosAntiguedad == 0 &&
-      this.mesesAntiguedad <= 3 &&
-      this.diasAntiguedad == 0
-    ) {
-      this.salarioProporcional = 0;
-    } else {
-      //Si la antigüedad en >3 meses entonces se calula 1 sueldo Bruto por año
-      this.salarioProporcional = this.aniosAntiguedad * this.empleado.sueldoBruto;
-      //Si en el ultimo año que trabajo, excedio 3 meses, se le paga 1 sueldo bruto mas
-      if (this.mesesAntiguedad > 3)
-        this.salarioProporcional += this.empleado.sueldoBruto;
-    }
-  }
+//--Div listado empleados
+const divlistado = d.createElement("div")
+divlistado.className = "tp-cardsEmpleados"
+divlistado.id="tp-listadoLiquidacionesEmpleados"
 
-  calcularSustitutivaPreAviso() {
-      //Si no hubo preaviso, se debe pagar el concepto de Sustitutiva
-      if (this.empleado.preAviso == "NO") {
-        //Si la antigüedad en meses es <=3 meses corresponde 15 dias (bruto/30*15), sino 1 mes hasta 5 años o 2 meses cuando es mas de 5 años)
-        if (
-          this.aniosAntiguedad == 0 &&
-          this.mesesAntiguedad <= 3 &&
-          this.diasAntiguedad == 0
-        ) {
-          //Para el calulo de la antiguedad de años utilizo ceil para obtener el año mayor mas próximo al calular los meses/12
-          this.sustitutivaPreAviso = (this.empleado.sueldoBruto / 30) * 15;
-        } else if (
-          this.aniosAntiguedad >= 0 &&
-          this.aniosAntiguedad <= 5
-        ) {
-          this.sustitutivaPreAviso = this.empleado.sueldoBruto;
-        } else {
-          this.sustitutivaPreAviso = this.empleado.sueldoBruto * 2;
-        }
-      } else this.sustitutivaPreAviso = 0;
-    }
+//--Creo el boton para calcular liquidaciones
+const botonLiquidaciones=d.createElement("button")
+botonLiquidaciones.type="button"
+botonLiquidaciones.className="btn btn-primary tp-botonCalcular"
+botonLiquidaciones.addEventListener("click",calcularLiquidaciones)
+botonLiquidaciones.innerText="Calcular Liquidaciones"
 
-  calcularSacPreAviso() {
-    this.sacPreAviso = this.sustitutivaPreAviso / 12;
-  }
+//******************************* FOOTER ************************************ */
+const anio = new Date().getFullYear(); /// 2023
 
-  calcularSueldoDiasTrabajadorDelMes() {
-    //Se paga el total correspondiente a los dias trabajados del mes de despido
-    let fechaDesvinculacion = new Date(this.empleado.fechaDesvinculacion)
-    let diasTotalesMes = diasDelMes(fechaDesvinculacion);
-    let diaDesvinculacion = fechaDesvinculacion.getDate();
-    this.sueldoDiasTrabajadorDelMes =
-      (this.empleado.sueldoBruto / diasTotalesMes) * diaDesvinculacion;
-  }
-  calcularIntegracionMesDespido() {
-    //Se paga el total correspondiente a los dias que no trabajo del mes hasta completarlo
-    let fechaDesvinculacion = new Date(this.empleado.fechaDesvinculacion)
-    let diasTotalesMes = diasDelMes(fechaDesvinculacion);
-    let diaDesvinculacion = fechaDesvinculacion.getDate();
-    this.integracionMesDespido =
-      (this.empleado.sueldoBruto / diasTotalesMes) *
-      (diasTotalesMes - diaDesvinculacion);
-  }
-  calcularSacIntegracionMesDespido() {
-    //Se paga el proporcional del SAC segun la integracion del mes de despido
-    this.sacIntegracionMesDespido = this.integracionMesDespido / 12;
-  }
-  calcularSacProporcional() {
-    let fechaDesvinculacion = new Date(this.empleado.fechaDesvinculacion)
-    //Se paga el proporcional del SAC segun la cantidad de dias trabajados en el mes de despido
-    let cantDiasTrabajadosAnioDespido =
-      (fechaDesvinculacion.getTime() -
-        new Date(
-          fechaDesvinculacion.getFullYear(),
-          1,
-          1
-        ).getTime()) /
-      1000 /
-      60 /
-      60 /
-      24;
-    this.sacProporcional =
-      (this.empleado.sueldoBruto / 4 / 360) * (cantDiasTrabajadosAnioDespido + 1);
-  }
-  calcularVacacionesNoGozadas() {
-    let fechaDesvinculacion = new Date(this.empleado.fechaDesvinculacion)
-    //Se paga segun la cantidad de dias trabajados en el año, tenienedo en cuenta el arrayVacaciones
-    let sueldoCalculado = this.empleado.sueldoBruto / 25;
-    let cantDiasVacaciones = 0;
-    let cantDiasTrabajadosAnioDespido =
-      (fechaDesvinculacion.getTime() -
-        new Date(
-          fechaDesvinculacion.getFullYear(),
-          1,
-          1
-        ).getTime()) /
-      1000 /
-      60 /
-      60 /
-      24;
-    if (this.aniosAntiguedad == 0 && this.mesesAntiguedad < 6) {
-      this.vacacionesNoGozadas = 0;
-    } else {
-      cantDiasVacaciones = arrayVacaciones.filter(
-        (vacaciones) =>
-          this.aniosAntiguedad >= vacaciones.desde &&
-          this.aniosAntiguedad <= vacaciones.hasta
-      );
-      this.vacacionesNoGozadas =
-        sueldoCalculado *
-        ((cantDiasVacaciones[0].dias / 365) *
-          (cantDiasTrabajadosAnioDespido + 1));
-    }
-  }
-  calcularSacVacacionesNoGozadas() {
-    this.sacVacacionesNoGozadas = this.vacacionesNoGozadas / 12;
-  }
-  calcularTotalLiquidacion() {
-      this.totalLiquidacion =
-      this.salarioProporcional +
-      this.sustitutivaPreAviso +
-      this.sacPreAviso +
-      this.sueldoDiasTrabajadorDelMes +
-      this.integracionMesDespido +
-      this.sacIntegracionMesDespido +
-      this.sacProporcional +
-      this.vacacionesNoGozadas +
-      this.sacVacacionesNoGozadas;
-  }
-  calcularLiquidacion() {
-    this.obtenerAnioMesesDiasAntiguedad();
-    this.calcularSalarioProporcionalArt245();
-    this.calcularSustitutivaPreAviso();
-    this.calcularSacPreAviso();
-    this.calcularSueldoDiasTrabajadorDelMes();
-    this.calcularIntegracionMesDespido();
-    this.calcularSacIntegracionMesDespido();
-    this.calcularSacProporcional();
-    this.calcularVacacionesNoGozadas();
-    this.calcularSacVacacionesNoGozadas();
-    this.calcularTotalLiquidacion();
-    this.imprimirLiquidacion();
-  }
+const pie = d.createElement("footer")
+pie.className="container-fluid"
 
-  
-  imprimirLiquidacion() {
-    this.detalleLiquidacion = "Antigüedad Art. 245: $" + this.salarioProporcional.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>Sustitutiva de Preaviso: $" + this.sustitutivaPreAviso.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>SAC del Preaviso: $" + this.sacPreAviso.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>Sueldo por días Trabajados del mes: $" + this.sueldoDiasTrabajadorDelMes.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>Integración mes de despido: $" + this.integracionMesDespido.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>SAC Integración mes de despido: $" + this.sacIntegracionMesDespido.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>SAC Proporcional: $" + this.sacProporcional.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>Vacaciones no Gozadas: $" + this.vacacionesNoGozadas.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/>SAC Vacaciones no Gozadas: $" + this.sacVacacionesNoGozadas.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/><strong>TOTAL DE LA LIQUIDACION:</strong> $" + this.totalLiquidacion.toLocaleString("en-US")
-  }
-}
+const seccionPie=d.createElement("section")
+seccionPie.className="row"
 
-//*******************************************************************************************/
-//******************************** Declaro array de Vacaciones  *****************************/
-//*******************************************************************************************/
-// Cantidad de dias por antigüedad	  Cant dias
-// 6 meses a 5 años	                    14
-// 6 años a 10 años	                    21
-// 11 años a 20 años	                  28
-// mayor a 20 años	                    35
+const divPie=d.createElement("div")
+divPie.className="copyright"
+divPie.innerText=`Todos los derechos reservados ${anio} Ⓒ Alumno: Castillo Legal Sergio`
+//******************************* APPEND CHILDS ************************************ */
 
-const arrayVacaciones = [];
-//pongo 0 en el objeto 0 del array, porque quiero representar años, luego lo valido en la funcion del calculo de vacaciones y no le permito si tiene menos de 6 meses de trabajo
-arrayVacaciones.push(new Vacaciones(0, 5, 14));
-arrayVacaciones.push(new Vacaciones(6, 10, 21));
-arrayVacaciones.push(new Vacaciones(11, 20, 28));
-arrayVacaciones.push(new Vacaciones(21, 999, 35));
+seccionPie.appendChild(divPie)
+pie.appendChild(seccionPie)
 
-//*******************************************************************************************/
+formulario.appendChild(divInputs)
+formulario.appendChild(botonForm)
+divIzquierdo.appendChild(tituloIzquierdo)
+divIzquierdo.appendChild(formulario)
 
-function diasDelMes(fecha) {
-  return new Date(fecha.getFullYear(), fecha.getMonth(), 0).getDate();
-}
+divDerecho.appendChild(tituloDerecho)
+divDerecho.appendChild(divlistado)
+divDerecho.appendChild(botonLiquidaciones)
+
+seccion.appendChild(divIzquierdo)
+seccion.appendChild(divDerecho)
+main.appendChild(seccion)
+
+menu.appendChild(contenedor)
+header.appendChild(menu)
+
+cuerpo.prepend(pie)
+cuerpo.prepend(main)
+cuerpo.prepend(header)
