@@ -34,30 +34,41 @@ camposValidos = () => {
   let vFechaIngreso = validarFecha(fechaIngreso.value)
   let vFechaDespido = validarFecha(fechaDespido.value)
   let vHuboPreaviso = validarPreAviso(huboPreAviso.value)
-  let mensaje = "Debe completar los siguientes campos obligatorios y válidos: \n"
+  let mensaje = "Debe completar los siguientes campos obligatorios y válidos: <br/>"
 
   if (!vNombre) {
     formValido = false
-    mensaje += "Nombre y Apellido\n"
+    mensaje += "Nombre y Apellido<br/>"
   }
   if (!vSueldo) {
     formValido = false
-    mensaje += "Sueldo Bruto\n"
+    mensaje += "Sueldo Bruto<br/>"
   }
   if (!vFechaIngreso) {
     formValido = false
-    mensaje += "Fecha Ingreso\n"
+    mensaje += "Fecha Ingreso<br/>"
   }
   if (!vFechaDespido) {
     formValido = false
-    mensaje += "Fecha Despido\n"
+    mensaje += "Fecha Despido<br/>"
   }
   if (!vHuboPreaviso) {
     formValido = false
-    mensaje += "Hubo Preaviso\n"
+    mensaje += "Hubo Preaviso"
   }
 
-  return formValido || alert(mensaje)
+  if (!formValido)
+  {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        html: mensaje,
+        showCloseButton: false,
+        confirmButtonText: "Cerrar"
+      })
+  }
+
+  return formValido
 }
 
 //*******************************************************************************************/
