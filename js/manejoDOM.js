@@ -85,12 +85,12 @@ const limpiarCampos = () => {
 
 function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,huboPreAviso,liquidacionfinal,id,detalleLiquidacion) {
   const card = document.createElement("div")
-  card.className = "card tp-empleadoCard"
+  card.classList = "card tp-empleadoCard"
   //card.id="prueba"
 
   const img = document.createElement("img")
   img.src = "./img/empleado.png"
-  img.className = "card-img-top tp-imgEmpleado"
+  img.classList = "card-img-top tp-imgEmpleado"
   img.alt = "imagen Empleado"
   img.title = "Empleado Ingresado"
   card.appendChild(img)
@@ -113,7 +113,7 @@ function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,
   botonDetalle.id = `botonDetalle${id}`
   botonDetalle.type = "button"
   //Muestro el boton detalle si tiene liquidacion
-  botonDetalle.className = (parseFloat(liquidacionfinal)>0) ? "btn btn-success tp-botonDetalle" : "btn btn-success tp-botonDetalle tp-botonDetalleInvisible"
+  botonDetalle.classList = (parseFloat(liquidacionfinal)>0) ? "btn btn-success tp-botonDetalle" : "btn btn-success tp-botonDetalle tp-botonDetalleInvisible"
   botonDetalle.innerText = "Detalle"
   //Agregar un Sweet Alert al boton detalle
   botonDetalle.addEventListener('click', () => {Swal.fire({
@@ -129,7 +129,7 @@ function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,
   const botonBorrar = document.createElement("button")
   botonBorrar.id = `botonBorrar${id}`
   botonBorrar.type = "button"
-  botonBorrar.className = "btn btn-danger tp-botonBorrar"
+  botonBorrar.classList = "btn btn-danger tp-botonBorrar"
   botonBorrar.innerHTML = "<i class=\"fa fa-trash\"></i>"
   botonBorrar.onclick = function borrarEmpleado(){
     let a = JSON.parse(localStorage.getItem("arrayLiquidaciones"))

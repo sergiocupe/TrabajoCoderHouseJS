@@ -45,7 +45,7 @@ function calcularLiquidaciones() {
       document.getElementById(`liq${objeto.empleado.id}`).innerHTML  = " $ " + liq.obtenerTotalLiquidacion()
 
       //Habilito el boton Detalle del empleado calculado
-      document.getElementById(`botonDetalle${objeto.empleado.id}`).className = "btn btn-success tp-botonDetalle"
+      document.getElementById(`botonDetalle${objeto.empleado.id}`).classList = "btn btn-success tp-botonDetalle"
       document.getElementById(`botonDetalle${objeto.empleado.id}`).addEventListener('click', () => {Swal.fire({
         title: 'Detalle liquidación de ' + objeto.empleado.nombre,
         html: liq.detalleLiquidacion,

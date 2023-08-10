@@ -35,10 +35,10 @@ const header = d.createElement("header")
 header.className = "header";
 
 const menu = d.createElement("nav")
-menu.className = "navbar navbar-expand-lg navbar-light bg-dark"
+menu.classList = "navbar navbar-expand-lg navbar-light bg-dark"
 
 const contenedor = d.createElement("div")
-contenedor.className = "container-fluid tp-titulo-header"
+contenedor.classList = "container-fluid tp-titulo-header"
 contenedor.innerText = "CÁLCULO DE INDEMNIZACIÓN POR DESPIDO SIN CAUSA"
 
 //******************************* MAIN ************************************ */
@@ -51,7 +51,7 @@ seccion.className = "tp-seccionForm"
 
 //--div contenedor
 const divIzquierdo = d.createElement("div")
-divIzquierdo.className = "col-xs-12 col-sm-12 col-md-5 col-lg-5"
+divIzquierdo.classList = "col-xs-12 col-sm-12 col-md-5 col-lg-5"
 
 //--h1 del titulo izquierdo
 const tituloIzquierdo = d.createElement("h1")
@@ -89,11 +89,11 @@ botonForm.className="btn btn-success"
 botonForm.addEventListener("click",agregarEmpleadoLista)
 botonForm.innerText="Agregar Empleado"
 
-//--Section derecho -- Listado de empeledos
+//--Section derecho -- Listado de empleados
 
 //--div contenedor
 const divDerecho = d.createElement("div")
-divDerecho.className = "col-xs-12 col-sm-12 col-md-7 col-lg-7 tp-empleados"
+divDerecho.classList = "col-xs-12 col-sm-12 col-md-7 col-lg-7 tp-empleados"
 
 //--h1 del titulo izquierdo
 const tituloDerecho = d.createElement("h1")
@@ -108,12 +108,12 @@ divlistado.id="tp-listadoLiquidacionesEmpleados"
 //--Creo el boton para calcular liquidaciones
 const botonLiquidaciones=d.createElement("button")
 botonLiquidaciones.type="button"
-botonLiquidaciones.className="btn btn-primary tp-botonCalcular"
+botonLiquidaciones.classList="btn btn-primary tp-botonCalcular"
 botonLiquidaciones.addEventListener("click",calcularLiquidaciones)
 botonLiquidaciones.innerText="Calcular Liquidaciones"
 
 //******************************* FOOTER ************************************ */
-const anio = new Date().getFullYear(); /// 2023
+const anioCopyright = new Date().getFullYear(); 
 
 const footer = d.createElement("footer")
 footer.className="container-fluid"
@@ -123,7 +123,7 @@ seccionFooter.className="row"
 
 const divFooter=d.createElement("div")
 divFooter.className="copyright"
-divFooter.innerText=`Todos los derechos reservados ${anio} Ⓒ Alumno: Castillo Legal Sergio`
+divFooter.innerText=`Todos los derechos reservados ${anioCopyright} Ⓒ Alumno: Castillo Legal Sergio`
 //******************************* APPEND CHILDS ************************************ */
 
 seccionFooter.appendChild(divFooter)
