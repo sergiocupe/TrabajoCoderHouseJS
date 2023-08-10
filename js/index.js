@@ -115,19 +115,19 @@ botonLiquidaciones.innerText="Calcular Liquidaciones"
 //******************************* FOOTER ************************************ */
 const anio = new Date().getFullYear(); /// 2023
 
-const pie = d.createElement("footer")
-pie.className="container-fluid"
+const footer = d.createElement("footer")
+footer.className="container-fluid"
 
-const seccionPie=d.createElement("section")
-seccionPie.className="row"
+const seccionFooter=d.createElement("section")
+seccionFooter.className="row"
 
-const divPie=d.createElement("div")
-divPie.className="copyright"
-divPie.innerText=`Todos los derechos reservados ${anio} Ⓒ Alumno: Castillo Legal Sergio`
+const divFooter=d.createElement("div")
+divFooter.className="copyright"
+divFooter.innerText=`Todos los derechos reservados ${anio} Ⓒ Alumno: Castillo Legal Sergio`
 //******************************* APPEND CHILDS ************************************ */
 
-seccionPie.appendChild(divPie)
-pie.appendChild(seccionPie)
+seccionFooter.appendChild(divFooter)
+footer.appendChild(seccionFooter)
 
 formulario.appendChild(divInputs)
 formulario.appendChild(botonForm)
@@ -145,6 +145,6 @@ main.appendChild(seccion)
 menu.appendChild(contenedor)
 header.appendChild(menu)
 
-cuerpo.prepend(pie)
+cuerpo.prepend(footer)
 cuerpo.prepend(main)
 cuerpo.prepend(header)
