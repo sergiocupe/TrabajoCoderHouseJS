@@ -32,7 +32,7 @@ const campos =[
 //******************************* HEADER ************************************ */
 //Creacion en el DOM de header del index.html
 const header = d.createElement("header")
-header.class = "header";
+header.className = "header";
 
 const menu = d.createElement("nav")
 menu.className = "navbar navbar-expand-lg navbar-light bg-dark"
@@ -93,7 +93,7 @@ botonForm.innerText="Agregar Empleado"
 
 //--div contenedor
 const divDerecho = d.createElement("div")
-divDerecho.className = "col-xs-12 col-sm-12 col-md-5 col-lg-5"
+divDerecho.className = "col-xs-12 col-sm-12 col-md-7 col-lg-7 tp-empleados"
 
 //--h1 del titulo izquierdo
 const tituloDerecho = d.createElement("h1")
