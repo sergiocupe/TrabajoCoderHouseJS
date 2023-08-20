@@ -32,7 +32,7 @@ const campos =[
 //******************************* HEADER ************************************ */
 //Creacion en el DOM de header del index.html
 const header = d.createElement("header")
-header.className = "header";
+header.className = "header"
 
 const menu = d.createElement("nav")
 menu.classList = "navbar navbar-expand-lg navbar-light bg-dark"
@@ -98,12 +98,13 @@ divDerecho.classList = "col-xs-12 col-sm-12 col-md-7 col-lg-7 tp-empleados"
 //--h1 del titulo izquierdo
 const tituloDerecho = d.createElement("h1")
 tituloDerecho.className = "tp-titulo"
-tituloDerecho.innerText = "Listado de Empleados a liquidar:"
+tituloDerecho.innerText = "Listado de Empleados a liquidar: "
 
 //--Div listado empleados
 const divlistado = d.createElement("div")
 divlistado.className = "tp-cardsEmpleados"
 divlistado.id="tp-listadoLiquidacionesEmpleados"
+divlistado.innerHTML=`<img src="img/loading-cargando.gif" class="tp-imgCargando"/>`
 
 //--Creo el boton para calcular liquidaciones
 const botonLiquidaciones=d.createElement("button")

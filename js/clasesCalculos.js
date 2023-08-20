@@ -32,6 +32,7 @@ class Liquidacion {
   vacacionesNoGozadas = 0;
   sacVacacionesNoGozadas = 0;
   totalLiquidacion = 0;
+  totalLiquidacionDolares=0;
   
   aniosAntiguedad = 0;
   mesesAntiguedad = 0;
@@ -47,6 +48,10 @@ class Liquidacion {
   
   obtenerTotalLiquidacion() {
     return this.totalLiquidacion.toLocaleString("en-US")
+  }
+
+  obtenerTotalLiquidacionDolares() {
+    return this.totalLiquidacionDolares.toLocaleString("en-US")
   }
   
   obtenerAnioMesesDiasAntiguedad() {
@@ -209,6 +214,11 @@ class Liquidacion {
       this.vacacionesNoGozadas +
       this.sacVacacionesNoGozadas;
   }
+
+  calcularTotalLiquidacionDolares(){
+    this.totalLiquidacionDolares = this.totalLiquidacion/parseFloat(cotizacionDolar)
+  }
+
   calcularLiquidacion() {
     this.obtenerAnioMesesDiasAntiguedad();
     this.calcularSalarioProporcionalArt245();
@@ -221,6 +231,7 @@ class Liquidacion {
     this.calcularVacacionesNoGozadas();
     this.calcularSacVacacionesNoGozadas();
     this.calcularTotalLiquidacion();
+    this.calcularTotalLiquidacionDolares();
     this.imprimirLiquidacion();
   }
 
@@ -235,7 +246,9 @@ class Liquidacion {
     this.detalleLiquidacion += "<br/>SAC Proporcional: $" + this.sacProporcional.toLocaleString("en-US")
     this.detalleLiquidacion += "<br/>Vacaciones no Gozadas: $" + this.vacacionesNoGozadas.toLocaleString("en-US")
     this.detalleLiquidacion += "<br/>SAC Vacaciones no Gozadas: $" + this.sacVacacionesNoGozadas.toLocaleString("en-US")
-    this.detalleLiquidacion += "<br/><strong>TOTAL DE LA LIQUIDACION:</strong> $" + this.totalLiquidacion.toLocaleString("en-US")
+    this.detalleLiquidacion += "<br/><strong>TOTAL DE LA LIQUIDACION:</strong>"
+    this.detalleLiquidacion += "<br/>$ " + this.totalLiquidacion.toLocaleString("en-US")
+    this.detalleLiquidacion += "<br/>USD " + this.totalLiquidacionDolares.toLocaleString("en-US")
   }
 }
 

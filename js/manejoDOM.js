@@ -83,7 +83,7 @@ const limpiarCampos = () => {
   huboPreAviso.selectedIndex = 0
 }
 
-function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,huboPreAviso,liquidacionfinal,id,detalleLiquidacion) {
+function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,huboPreAviso,liquidacionfinal,id,detalleLiquidacion,totalLiquidacionDolares){
   const card = document.createElement("div")
   card.classList = "card tp-empleadoCard"
   //card.id="prueba"
@@ -106,7 +106,9 @@ function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,
   datos2.className = "tp-datosEmpleado"
   datos2.innerHTML = `<strong>Fecha Ingreso:</strong> ${new Date(fechaIngreso).toLocaleDateString("es-AR")}<br />
   <strong>Fecha Despido:</strong> ${new Date(fechaDespido).toLocaleDateString("es-AR")}<br />
-  <strong>Liquidacion Final:</strong><label id="liq${id}" class="tp-liquidacionTotal">$ ${liquidacionfinal.toLocaleString("en-US")}</label><br />`
+  <strong>LIQ FINAL:</strong><label id="liq${id}" class="tp-liquidacionTotal">$ ${liquidacionfinal.toLocaleString("en-US")}</label>
+  <label id="liqDolares${id}" class="tp-liquidacionTotal">USD ${totalLiquidacionDolares.toLocaleString("en-US")}</label>
+  </label><br />`
   card.appendChild(datos2)
 
   const botonDetalle = document.createElement("button")
@@ -140,7 +142,6 @@ function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,
     cargarLocalStorage()
   }
   card.appendChild(botonBorrar)
-
   return card
 }
 
@@ -170,8 +171,8 @@ function cargarLocalStorage()
     for (liq of arrayLiquidaciones)
     {
       const {nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion,preAviso,id} = liq.empleado
-      const {totalLiquidacion, detalleLiquidacion} = liq
-      let card = crearCardEmpleado(nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion,preAviso,totalLiquidacion,id,detalleLiquidacion)
+      const {totalLiquidacion, detalleLiquidacion, totalLiquidacionDolares} = liq
+      let card = crearCardEmpleado(nombre,sueldoBruto,fechaIngresoLaboral,fechaDesvinculacion,preAviso,totalLiquidacion,id,detalleLiquidacion,totalLiquidacionDolares)
       divListadoLiquidacionesEmpleados.appendChild(card)
     }
   }
@@ -181,4 +182,7 @@ function cargarLocalStorage()
 //************************************** Cargar el local Storage *****************************************/
 //********************************************************************************************************/
 
-cargarLocalStorage()
+//Promesa para obtener la cotizacion del dolar y mostrar la liquidacion Final en dolares
+obtenerCotizacionDolar("Dolar Blue")
+//Cargo el LocalStorage de la grilla
+setTimeout(()=> {cargarLocalStorage()}, 1500)

@@ -1,5 +1,25 @@
+let cotizacionDolar=0;
+
 function diasDelMes(fecha) {
   return new Date(fecha.getFullYear(), fecha.getMonth(), 0).getDate();
+}
+
+//***************************************************************************************************************/
+//********************************** Promesa para transformar Pesos en Dolares  *********************************/
+//***************************************************************************************************************/
+
+const obtenerCotizacionDolar = async (tipoDolar) => {
+  const res = await fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
+  const datos = await res.json()
+  const data = await datos
+
+  for(const item of data)
+  {
+    if (item.casa.nombre==tipoDolar)
+    {
+      cotizacionDolar=item.casa.venta
+    }
+  }
 }
 
 //**************************************************************************************************/
@@ -19,7 +39,8 @@ function agregarEmpleadoLista() {
     agregarLiquidacionLocalStorage(liquidacion)
 
     //Agrego un empleado a la lista de liquidaciones
-    let card = crearCardEmpleado(empleado.nombre,empleado.sueldoBruto,empleado.fechaIngresoLaboral,empleado.fechaDesvinculacion,empleado.preAviso,liquidacion.obtenerTotalLiquidacion(),localStorage.getItem("indiceDOM"),liquidacion.detalleLiquidacion)
+    const {totalLiquidacion, detalleLiquidacion, totalLiquidacionDolares} = liquidacion
+    let card = crearCardEmpleado(empleado.nombre,empleado.sueldoBruto,empleado.fechaIngresoLaboral,empleado.fechaDesvinculacion,empleado.preAviso,totalLiquidacion,localStorage.getItem("indiceDOM"),detalleLiquidacion,totalLiquidacionDolares)
     divListadoLiquidacionesEmpleados.appendChild(card)
     let i=parseInt(localStorage.getItem("indiceDOM"))
     i++
@@ -43,7 +64,7 @@ function calcularLiquidaciones() {
 
       //Cargo el total de la liquidacion calculada
       document.getElementById(`liq${objeto.empleado.id}`).innerHTML  = " $ " + liq.obtenerTotalLiquidacion()
-
+      document.getElementById(`liqDolares${objeto.empleado.id}`).innerHTML  = " USD " + liq.obtenerTotalLiquidacionDolares()
       //Habilito el boton Detalle del empleado calculado
       document.getElementById(`botonDetalle${objeto.empleado.id}`).classList = "btn btn-success tp-botonDetalle"
       document.getElementById(`botonDetalle${objeto.empleado.id}`).addEventListener('click', () => {Swal.fire({
