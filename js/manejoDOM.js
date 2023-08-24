@@ -54,7 +54,14 @@ camposValidos = () => {
   }
   if (!vHuboPreaviso) {
     formValido = false
-    mensaje += "Hubo Preaviso"
+    mensaje += "Hubo Preaviso<br/>"
+  }
+
+  //Valido que las fechas de ingreso sea menor a la fecha de despido
+  if (fechaIngreso.value>=fechaDespido.value)
+  {
+    formValido = false
+    mensaje += "La fecha de Ingreso debe ser menor a la fecha de Despido"
   }
 
   if (!formValido)
