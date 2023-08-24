@@ -86,7 +86,6 @@ const limpiarCampos = () => {
 function crearCardEmpleado(nombreApellido,sueldoBruto,fechaIngreso,fechaDespido,huboPreAviso,liquidacionfinal,id,detalleLiquidacion,totalLiquidacionDolares){
   const card = document.createElement("div")
   card.classList = "card tp-empleadoCard"
-  //card.id="prueba"
 
   const img = document.createElement("img")
   img.src = "./img/empleado.png"
@@ -182,7 +181,17 @@ function cargarLocalStorage()
 //************************************** Cargar el local Storage *****************************************/
 //********************************************************************************************************/
 
-//Promesa para obtener la cotizacion del dolar y mostrar la liquidacion Final en dolares
+//Promesa para obtener la cotizacion del dolar, si queda resuelta entonces carga e localStorage con las liquidaciones
 obtenerCotizacionDolar("Dolar Blue")
-//Cargo el LocalStorage de la grilla
-setTimeout(()=> {cargarLocalStorage()}, 1500)
+  .then((res)=>{
+    cargarLocalStorage()
+  })
+  .catch((error)=>{
+    Swal.fire({
+      title: 'Error al cargar las liquidaciones',
+      html: error,
+      confirmButtonText: 'Cerrar'
+      })
+  })
+
+

@@ -114,7 +114,7 @@ botonLiquidaciones.addEventListener("click",calcularLiquidaciones)
 botonLiquidaciones.innerText="Calcular Liquidaciones"
 
 //******************************* FOOTER ************************************ */
-const anioCopyright = new Date().getFullYear(); 
+const anioCopyright = new Date().getFullYear()
 
 const footer = d.createElement("footer")
 footer.className="container-fluid"

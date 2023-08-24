@@ -1,13 +1,16 @@
+//Variable global para mantener el valor de la cotización del dolar 
 let cotizacionDolar=0;
 
+//Funcion que devuelve la cantidad de dias del mes en curso
 function diasDelMes(fecha) {
-  return new Date(fecha.getFullYear(), fecha.getMonth(), 0).getDate();
+  return new Date(fecha.getFullYear(), fecha.getMonth(), 0).getDate()
 }
 
 //***************************************************************************************************************/
 //********************************** Promesa para transformar Pesos en Dolares  *********************************/
 //***************************************************************************************************************/
 
+//Promesa que recupera la cotizacion del dolar, para mostrar utilizarlo en las liquidaciones
 const obtenerCotizacionDolar = async (tipoDolar) => {
   const res = await fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
   const datos = await res.json()
@@ -26,6 +29,7 @@ const obtenerCotizacionDolar = async (tipoDolar) => {
 //**********************************Funciones para Eventos botones *********************************/
 //**************************************************************************************************/
 
+//Función que agrega un empleado al LocalStorage y crea la card de la grilla para que se visualice
 function agregarEmpleadoLista() {
   //Valido que los campos esten correctamente ingresados y completos
   if (camposValidos()) {
@@ -51,6 +55,7 @@ function agregarEmpleadoLista() {
   }
 }
 
+//Funcion que recorre el array de objetos del LocalStorage y calcula las liquidaciones, habilita el boton detalle de la grilla cuando finaliza para que se vea el detalle
 function calcularLiquidaciones() {
   let arrayLiqStorage = localStorage.getItem("arrayLiquidaciones") ? JSON.parse(localStorage.getItem("arrayLiquidaciones")) : []
   const arrayLiq=[]
